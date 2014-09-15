@@ -1,0 +1,36 @@
+#!/bin/sh
+
+install() {
+  set -e
+  VER="2.1.2"
+  PKG_NAME="runit"
+  PKG_DIR="/package/$PKG_NAME"
+
+  echo "Downloading $PKG_NAME-$VER..."
+  cd /package
+  wget http://smarden.org/runit/"$PKG_NAME-$VER".tar.gz
+  tar -xp --strip 1 -f "$PKG_NAME-$VER".tar.gz
+  rm "$PKG_NAME-$VER".tar.gz
+
+  echo "Compiling and Installing $PKG_NAME-$VER..."
+  cd "$PKG_DIR-$VER"
+  package/install
+
+  echo "Installing man pages for $PKG_NAME-$VER..."
+  package/install-man
+
+  echo "Cleaning up $PKG_NAME-$VER..."
+  cd "$PKG_DIR-$VER"
+  rm -rf compile src etc doc
+
+  local tmp_size; tmp_size="$(du -h $PKG_DIR-$VER)"
+  echo "Total install size is... $tmp_size"
+  set +e
+}
+
+# Main
+# Only run script if params are provided.
+# Useful for sourcing the file for testing or direct access to functions.
+if [ "$#" -gt 0 ]; then
+  install "$@"
+fi
