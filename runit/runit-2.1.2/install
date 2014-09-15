@@ -1,7 +1,7 @@
 #!/bin/sh
 
 install() {
-  set -e
+  set -ex
   VER="2.1.2"
   PKG_NAME="runit"
   PKG_DIR="/package/$PKG_NAME"
@@ -17,6 +17,7 @@ install() {
   package/install
 
   echo "Installing man pages for $PKG_NAME-$VER..."
+  cd "$PKG_DIR-$VER"
   package/install-man
 
   echo "Cleaning up $PKG_NAME-$VER..."
@@ -25,7 +26,7 @@ install() {
 
   local tmp_size; tmp_size="$(du -h $PKG_DIR-$VER)"
   echo "Total install size is... $tmp_size"
-  set +e
+  set +ex
 }
 
 # Main
