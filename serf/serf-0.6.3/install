@@ -1,6 +1,6 @@
 #!/bin/sh
 
-install_serf() {
+install() {
   set -e
   VER="0.6.3"
   PKG_NAME="serf"
@@ -40,5 +40,5 @@ install_serf() {
 # Only run script if params are provided.
 # Useful for sourcing the file for testing or direct access to functions.
 if [ "$#" -gt 0 ]; then
-  install_serf "$@"
+  install "$@"
 fi
