@@ -1,7 +1,7 @@
 #!/bin/sh
 
 install() {
-  set -ex
+  set -e
   VER="2.1.2"
   PKG_NAME="runit"
   PKG_DIR="/package/$PKG_NAME"
@@ -11,6 +11,7 @@ install() {
   wget http://smarden.org/runit/"$PKG_NAME-$VER".tar.gz
   tar -xp --strip 1 -f "$PKG_NAME-$VER".tar.gz
   rm "$PKG_NAME-$VER".tar.gz
+  set +e
 
   echo "Compiling and Installing $PKG_NAME-$VER..."
   cd "$PKG_DIR-$VER"
@@ -20,13 +21,15 @@ install() {
   cd "$PKG_DIR-$VER"
   package/install-man
 
+  set -e
   echo "Cleaning up $PKG_NAME-$VER..."
   cd "$PKG_DIR-$VER"
   rm -rf compile src etc doc
 
   local tmp_size; tmp_size="$(du -h $PKG_DIR-$VER)"
-  echo "Total install size is... $tmp_size"
-  set +ex
+  echo "Total install size is..."
+  echo "$tmp_size"
+  set +e
 }
 
 # Main
