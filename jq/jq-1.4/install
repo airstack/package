@@ -9,6 +9,7 @@ install() {
 
   cd $PKG_DIR-$VER;
   wget https://stedolan.github.io/jq/download/linux64/jq
+  chmod +x ./$PKG_NAME
 
   echo "Creating custom command..."
   rm -f "$PKG_DIR-$VER/command/"*
