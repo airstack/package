@@ -16,22 +16,22 @@ install() {
 
   echo "Creating custom command..."
   rm -f "$PKG_DIR-$VER/command/"*
-  ln -s "$PKG_DIR-$VER/serf" "$PKG_DIR-$VER/command/"
+  ln -s "$PKG_DIR-$VER/$PKG_NAME" "$PKG_DIR-$VER/command/"
 
   echo "Creating symlink $PKG_NAME -> $PKG_NAME-$VER..."
   rm -f "$PKG_DIR"
   ln -s "$PKG_DIR"-"$VER" "$PKG_DIR"
 
   echo 'Making command links in /command...'
-  i=serf; rm -f /command/$i'{new}'
-  rm -f /command/"$i"
-  ln -s "$PKG_DIR"/command/"$i" /command/"$i"'{new}'
-  mv -f /command/"$i"'{new}' /command/"$i"
+  rm -f /command/$PKG_NAME'{new}'
+  rm -f /command/"$PKG_NAME"
+  ln -s "$PKG_DIR"/command/"$PKG_NAME" /command/"$PKG_NAME"'{new}'
+  mv -f /command/"$PKG_NAME"'{new}' /command/"$PKG_NAME"
 
   echo 'Making compatibility links in /usr/local/bin...'
-  rm -f /usr/local/bin/$i'{new}'
-  ln -s /command/$i /usr/local/bin/$i'{new}'
-  mv -f /usr/local/bin/$i'{new}' /usr/local/bin/$i
+  rm -f /usr/local/bin/$PKG_NAME'{new}'
+  ln -s /command/$PKG_NAME /usr/local/bin/$PKG_NAME'{new}'
+  mv -f /usr/local/bin/$PKG_NAME'{new}' /usr/local/bin/$PKG_NAME
 
   set +e
 }
