@@ -1,0 +1,40 @@
+#!/bin/sh
+
+install() {
+  set -e
+  VER="1.4"
+  PKG_NAME="jq"
+  PKG_DIR="/package/$PKG_NAME"
+  mkdir -p "$PKG_DIR-$VER"/command
+
+  cd $PKG_DIR-$VER;
+  wget https://stedolan.github.io/jq/download/linux64/jq
+
+  echo "Creating custom command..."
+  rm -f "$PKG_DIR-$VER/command/"*
+  ln -s "$PKG_DIR-$VER/$PKG_NAME" "$PKG_DIR-$VER/command/"
+
+  echo "Creating symlink $PKG_NAME -> $PKG_NAME-$VER..."
+  rm -f "$PKG_DIR"
+  ln -s "$PKG_DIR"-"$VER" "$PKG_DIR"
+
+  echo 'Making command links in /command...'
+  rm -f /command/$PKG_NAME'{new}'
+  rm -f /command/"$PKG_NAME"
+  ln -s "$PKG_DIR"/command/"$PKG_NAME" /command/"$PKG_NAME"'{new}'
+  mv -f /command/"$PKG_NAME"'{new}' /command/"$PKG_NAME"
+
+  echo 'Making compatibility links in /usr/local/bin...'
+  rm -f /usr/local/bin/$PKG_NAME'{new}'
+  ln -s /command/$PKG_NAME /usr/local/bin/$PKG_NAME'{new}'
+  mv -f /usr/local/bin/$PKG_NAME'{new}' /usr/local/bin/$PKG_NAME
+
+  set +e
+}
+
+# Main
+# Only run script if params are provided.
+# Useful for sourcing the file for testing or direct access to functions.
+if [ "$#" -gt 0 ]; then
+  install "$@"
+fi
