@@ -5,8 +5,8 @@ install() {
   VER="2.1.2"
   PKG_NAME="runit"
   PKG_DIR="/package/$PKG_NAME"
+  test -d /package || mkdir -p /package
 
-  echo "Downloading $PKG_NAME-$VER..."
   cd /package
   wget http://smarden.org/runit/"$PKG_NAME-$VER".tar.gz
   tar -xp --strip 1 -f "$PKG_NAME-$VER".tar.gz

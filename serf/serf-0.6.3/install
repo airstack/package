@@ -5,6 +5,7 @@ install() {
   VER="0.6.3"
   PKG_NAME="serf"
   PKG_DIR="/package/$PKG_NAME"
+  test -d /package || mkdir -p /package
   mkdir -p "$PKG_DIR-$VER"/command
 
   cd $PKG_DIR-$VER;

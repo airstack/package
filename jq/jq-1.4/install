@@ -5,6 +5,7 @@ install() {
   VER="1.4"
   PKG_NAME="jq"
   PKG_DIR="/package/$PKG_NAME"
+  test -d /package || mkdir -p /package
   mkdir -p "$PKG_DIR-$VER"/command
 
   cd $PKG_DIR-$VER;
